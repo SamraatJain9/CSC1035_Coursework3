@@ -35,7 +35,7 @@ public class SavedExpenses extends AbstractTableModel {
             case 1 -> expense.currency();
             //Bug
             //Fix: to String
-            case 2 -> expense.category().toString();
+            case 2 -> expense.category();
             case 3 -> expense.date().toString();
             default -> null;
         };
