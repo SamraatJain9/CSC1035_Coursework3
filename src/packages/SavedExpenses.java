@@ -1,4 +1,6 @@
-package assignment3.packages;
+package assignment3.packages.src.packages;
+
+import assignment3.packages.src.packages.Expense;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.List;

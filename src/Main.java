@@ -1,6 +1,7 @@
-package assignment3;
+package assignment3.packages.src;
 
-import assignment3.packages.*;
+import assignment3.packages.src.packages.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;

@@ -1,4 +1,6 @@
-package assignment3.packages;
+package assignment3.packages.src.packages;
+
+import assignment3.packages.src.packages.Category;
 
 import java.io.Serializable;
 import java.time.LocalDate;

@@ -1,4 +1,7 @@
-package assignment3.packages;
+package assignment3.packages.src.packages;
+
+import assignment3.packages.src.packages.Category;
+import assignment3.packages.src.packages.Expense;
 
 import javax.swing.*;
 import java.awt.*;
