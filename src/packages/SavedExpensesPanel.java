@@ -1,8 +1,5 @@
 package assignment3.packages.src.packages;
 
-import assignment3.packages.src.packages.Expense;
-import assignment3.packages.src.packages.SavedExpenses;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;

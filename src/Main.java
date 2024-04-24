@@ -1,13 +1,14 @@
 package assignment3.packages.src;
 
+
 import assignment3.packages.src.packages.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
-
+import java.lang.String;
 public class Main {
-//testing
+
     public static void main(String[] args) {
         createAndShowGUI();
     }
@@ -37,17 +38,25 @@ public class Main {
 
 
 
-
         // Listener for clicking savebutton
         newExpensesPanel.getSaveButton().addActionListener(e ->  {
             double amount = newExpensesPanel.getAmount();
-            String category = newExpensesPanel.getExpenseCategory();
+            //Adding panel to prevent saving expenses less equal to 0
+            if (amount <= 0) {
+                JOptionPane.showMessageDialog(frame, "Amount must be greater than zero.", "Error", JOptionPane.ERROR_MESSAGE);
+                return; // Stop further execution
+            }
+
+            String currency = String.valueOf(newExpensesPanel.getExpenseCurrency());
+            String category = String.valueOf(newExpensesPanel.getExpenseCategory());
+
             LocalDate date = newExpensesPanel.getDate();
 
-            Expense newExpense = new Expense(amount, category, date);
+            Expense newExpense = new Expense(amount, currency, category, date);
             expensesManager.addExpense(newExpense);
             savedExpensesPanel.updateTable(expensesManager.getAllExpenses());
         });
+
 
         SavedExpensesEditDialog editDialog = new SavedExpensesEditDialog(frame);
 
@@ -63,7 +72,20 @@ public class Main {
                     expensesManager.replaceExpense(selectedRow, selectedExpense);
                     savedExpensesPanel.updateTable(expensesManager.getAllExpenses());
                 }
-                }
+            }
+        });
+
+        //delete button
+        newExpensesPanel.getDeleteButton().addActionListener(e -> {
+            int selectedRow = savedExpensesPanel.getSavedSelectedExpenseIndex();
+            if (selectedRow != -1) {
+                // Get the selected expense
+                Expense selectedExpense = expensesManager.getAllExpenses().get(selectedRow);
+                // Remove the selected expense from the list
+                expensesManager.removeExpense(selectedRow);
+                // Update the table to reflect the changes
+                savedExpensesPanel.updateTable(expensesManager.getAllExpenses());
+            }
         });
 
 
@@ -76,11 +98,17 @@ public class Main {
 
         // Filter Button ActionListener
 
-        categoryFilterPanel.getFilterButton().addActionListener(e -> applyFilter());
+        // Filter Button ActionListener
+        //Bug
+        //Fix: categoryFilterPanel.getFilterButton().addActionListener(e -> categoryFilterPanel.applyFilter());
+        categoryFilterPanel.getFilterButton().addActionListener(e -> categoryFilterPanel.applyFilter());
+
 
         // Restore Button ActionListener
-
         categoryFilterPanel.getRestoreButton().addActionListener(e -> categoryFilterPanel.restoreFilter());
+
+        // Sum button
+        categoryFilterPanel.getSumButton().addActionListener(e -> categoryFilterPanel.sumExpenses());
 
     }
 }

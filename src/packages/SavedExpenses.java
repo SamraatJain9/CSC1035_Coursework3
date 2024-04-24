@@ -1,7 +1,5 @@
 package assignment3.packages.src.packages;
 
-import assignment3.packages.src.packages.Expense;
-
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
@@ -34,7 +32,9 @@ public class SavedExpenses extends AbstractTableModel {
         Expense expense = expenses.get(rowIndex);
         return switch (columnIndex) {
             case 0 -> expense.amount();
-            case 1 -> expense.category().getDisplayName();
+            //Bug
+            //Fix: to String
+            case 1 -> expense.category().toString();
             case 2 -> expense.date().toString();
             default -> null;
         };

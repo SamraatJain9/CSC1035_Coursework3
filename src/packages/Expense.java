@@ -1,8 +1,10 @@
 package assignment3.packages.src.packages;
 
-import assignment3.packages.src.packages.Category;
-
 import java.io.Serializable;
 import java.time.LocalDate;
 
-public record Expense(double amount, Category category, LocalDate date) implements Serializable { }
+//Bug
+//Fix Category -> String
+public record Expense(double amount, String Currency, String category, LocalDate date) implements Serializable {
+
+}

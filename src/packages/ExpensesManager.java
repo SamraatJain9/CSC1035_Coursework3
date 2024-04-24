@@ -1,8 +1,5 @@
 package assignment3.packages.src.packages;
 
-import assignment3.packages.src.packages.Category;
-import assignment3.packages.src.packages.Expense;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,7 +10,9 @@ public class ExpensesManager {
 
     public ExpensesManager() {
         // initially no expense
-        expenses = new ArrayList<>;
+        //Bug
+        //fix ()
+        expenses = new ArrayList<>();
     }
 
     // add an expense to the existing list of expenses
@@ -25,6 +24,14 @@ public class ExpensesManager {
     public void replaceExpense(int index, Expense newExpense) {
         if (index >= 0 && index < expenses.size()) {
             expenses.set(index, newExpense);
+
+        }
+    }
+
+    //Delete Button
+    public void removeExpense(int index) {
+        if (index >= 0 && index < expenses.size()) {
+            expenses.remove(index);
         }
     }
 

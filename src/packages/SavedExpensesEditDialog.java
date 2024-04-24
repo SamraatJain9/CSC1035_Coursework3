@@ -1,7 +1,6 @@
 package assignment3.packages.src.packages;
 
-import assignment3.packages.src.packages.Category;
-import assignment3.packages.src.packages.Expense;
+import assignment3.packages.src.packages.Currency;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,9 +10,13 @@ import java.util.Date;
 
 public class SavedExpensesEditDialog extends JDialog {
     private final JTextField amountField = new JTextField(10);
+
+    private final JComboBox<Currency> currencyComboBox = new JComboBox<>(Currency.values());
     private final JComboBox<Category> categoryComboBox = new JComboBox<>(Category.values());
     private final JSpinner dateSpinner = new JSpinner(new SpinnerDateModel());
     private boolean saved = false;
+
+    private boolean deleted = false;
 
     public SavedExpensesEditDialog(Frame owner) {
         super(owner, "Edit Expense", true);
@@ -36,6 +39,14 @@ public class SavedExpensesEditDialog extends JDialog {
             setVisible(false);
         });
         add(saveButton);
+
+        //Delete Button
+        JButton deleteButton = new JButton("Delete");
+        deleteButton.addActionListener(e -> {
+            deleted = true;
+            setVisible(false);
+        });
+        add(deleteButton);
 
         JButton cancelButton = new JButton("Cancel");
         cancelButton.addActionListener(e -> setVisible(false));
@@ -62,9 +73,12 @@ public class SavedExpensesEditDialog extends JDialog {
 
     public Expense getEditedExpense() {
         double amount = Double.parseDouble(amountField.getText());
-        Category category = (Category) categoryComboBox.getSelectedItem();
+        //Fix
+        String currency = String.valueOf(currencyComboBox.getSelectedItem());
+        String category = String.valueOf(categoryComboBox.getSelectedItem());
         Date date = (Date) dateSpinner.getValue();
         LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        return new Expense(amount, category, localDate);
+        //Bug
+        return new Expense(amount, currency, category, localDate);
     }
 }
