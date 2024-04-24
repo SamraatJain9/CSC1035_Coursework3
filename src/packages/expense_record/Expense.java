@@ -1,4 +1,4 @@
-package assignment3.packages.src.packages;
+package assignment3.packages.src.packages.expense_record;
 
 import java.io.Serializable;
 import java.time.LocalDate;

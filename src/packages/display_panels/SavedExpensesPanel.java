@@ -1,4 +1,7 @@
-package assignment3.packages.src.packages;
+package assignment3.packages.src.packages.display_panels;
+
+import assignment3.packages.src.packages.expense_record.Expense;
+import assignment3.packages.src.packages.display_table.SavedExpenses;
 
 import javax.swing.*;
 import java.awt.*;

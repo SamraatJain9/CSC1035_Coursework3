@@ -1,7 +1,12 @@
-package assignment3.packages.src;
+package assignment3.packages.src.main;
 
 // Import necessary packages
-import assignment3.packages.src.packages.*;
+import assignment3.packages.src.packages.display_panels.CategoryFilterPanel;
+import assignment3.packages.src.packages.display_panels.NewExpensesPanel;
+import assignment3.packages.src.packages.display_panels.SavedExpensesPanel;
+import assignment3.packages.src.packages.edit_dialogbox.SavedExpensesEditDialog;
+import assignment3.packages.src.packages.expense_manager.ExpensesManager;
+import assignment3.packages.src.packages.expense_record.Expense;
 
 import javax.swing.*;
 import java.awt.*;

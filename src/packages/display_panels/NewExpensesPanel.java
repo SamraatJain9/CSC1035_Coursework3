@@ -1,4 +1,7 @@
-package assignment3.packages.src.packages;
+package assignment3.packages.src.packages.display_panels;
+
+import assignment3.packages.src.packages.enums.Category;
+import assignment3.packages.src.packages.enums.Currency;
 
 import javax.swing.*;
 import java.awt.*;
