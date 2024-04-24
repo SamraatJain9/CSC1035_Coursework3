@@ -88,6 +88,18 @@ public class CategoryFilterPanel extends JPanel {
         // Get all expenses
         List<Expense> allExpenses = expensesManager.getAllExpenses();
 
+        // Check if there are expenses with different currencies
+        boolean hasDifferentCurrencies = allExpenses.stream()
+                .map(Expense::Currency)
+                .distinct()
+                .count() > 1;
+
+        if (hasDifferentCurrencies) {
+            // Display an error message
+            JOptionPane.showMessageDialog(null, "Cannot sum expenses with different currencies", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         // Calculate the sum
         double totalExpense = allExpenses.stream().mapToDouble(Expense::amount).sum();
 
