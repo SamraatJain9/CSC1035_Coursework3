@@ -1,27 +1,26 @@
 package assignment3.packages.src.packages;
 
-import assignment3.packages.src.packages.Currency;
-
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
+// Dialog for editing saved expenses
 public class SavedExpensesEditDialog extends JDialog {
-    private final JTextField amountField = new JTextField(10);
+    private final JTextField amountField = new JTextField(10); // Text field for entering amount
+    private final JComboBox<Currency> currencyComboBox = new JComboBox<>(Currency.values()); // Combo box for selecting currency
+    private final JComboBox<Category> categoryComboBox = new JComboBox<>(Category.values()); // Combo box for selecting category
+    private final JSpinner dateSpinner = new JSpinner(new SpinnerDateModel()); // Spinner for selecting date
+    private boolean saved = false; // Flag to track if expense is saved
+    private boolean deleted = false; // Flag to track if expense is deleted
 
-    private final JComboBox<Currency> currencyComboBox = new JComboBox<>(Currency.values());
-    private final JComboBox<Category> categoryComboBox = new JComboBox<>(Category.values());
-    private final JSpinner dateSpinner = new JSpinner(new SpinnerDateModel());
-    private boolean saved = false;
-
-    private boolean deleted = false;
-
+    // Constructor
     public SavedExpensesEditDialog(Frame owner) {
-        super(owner, "Edit Expense", true);
-        setLayout(new GridLayout(0, 2));
+        super(owner, "Edit Expense", true); // Set title and modal
+        setLayout(new GridLayout(0, 2)); // Set layout
 
+        // Add components to dialog
         add(new JLabel("Amount:"));
         add(amountField);
 
@@ -29,56 +28,55 @@ public class SavedExpensesEditDialog extends JDialog {
         add(categoryComboBox);
 
         add(new JLabel("Date:"));
-        JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(dateSpinner, "yyyy-MM-dd");
+        JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(dateSpinner, "yyyy-MM-dd"); // Date editor format
         dateSpinner.setEditor(dateEditor);
         add(dateSpinner);
 
-        JButton saveButton = new JButton("Save");
+        JButton saveButton = new JButton("Save"); // Save button
         saveButton.addActionListener(e -> {
-            saved = true;
-            setVisible(false);
+            saved = true; // Set saved flag to true
+            setVisible(false); // Hide dialog
         });
         add(saveButton);
 
-        //Delete Button
-        JButton deleteButton = new JButton("Delete");
+        JButton deleteButton = new JButton("Delete"); // Delete button
         deleteButton.addActionListener(e -> {
-            deleted = true;
-            setVisible(false);
+            deleted = true; // Set deleted flag to true
+            setVisible(false); // Hide dialog
         });
         add(deleteButton);
 
-        JButton cancelButton = new JButton("Cancel");
-        cancelButton.addActionListener(e -> setVisible(false));
+        JButton cancelButton = new JButton("Cancel"); // Cancel button
+        cancelButton.addActionListener(e -> setVisible(false)); // Hide dialog
         add(cancelButton);
 
-        pack();
+        pack(); // Pack components
     }
 
+    // Method to show dialog with expense details
     public boolean showDialog(Expense expense) {
         // Initialize dialog fields with expense details
         amountField.setText(String.valueOf(expense.amount()));
+        currencyComboBox.setSelectedItem(expense.currency());
         categoryComboBox.setSelectedItem(expense.category());
         dateSpinner.setValue(java.sql.Date.valueOf(expense.date()));
 
         saved = false; // Reset saved state
 
-        // Set location relative to the owner frame
-        setLocationRelativeTo(getOwner());
-
+        setLocationRelativeTo(getOwner()); // Set location relative to the owner frame
         setVisible(true); // Show dialog
 
         return saved; // Return true if saved, false otherwise
     }
 
+    // Method to get edited expense
     public Expense getEditedExpense() {
-        double amount = Double.parseDouble(amountField.getText());
-        //Fix
-        String currency = String.valueOf(currencyComboBox.getSelectedItem());
-        String category = String.valueOf(categoryComboBox.getSelectedItem());
-        Date date = (Date) dateSpinner.getValue();
-        LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        //Bug
-        return new Expense(amount, currency, category, localDate);
+        double amount = Double.parseDouble(amountField.getText()); // Parse amount field
+        String currency = (String) currencyComboBox.getSelectedItem(); // Get selected currency
+        String category = (String) categoryComboBox.getSelectedItem(); // Get selected category
+        Date date = (Date) dateSpinner.getValue(); // Get selected date
+        LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(); // Convert date to LocalDate
+
+        return new Expense(amount, currency, category, localDate); // Return edited expense
     }
 }

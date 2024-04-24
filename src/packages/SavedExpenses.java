@@ -32,7 +32,7 @@ public class SavedExpenses extends AbstractTableModel {
         Expense expense = expenses.get(rowIndex);
         return switch (columnIndex) {
             case 0 -> expense.amount();
-            case 1 -> expense.Currency();
+            case 1 -> expense.currency();
             //Bug
             //Fix: to String
             case 2 -> expense.category().toString();

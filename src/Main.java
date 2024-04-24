@@ -1,28 +1,30 @@
 package assignment3.packages.src;
 
-
+// Import necessary packages
 import assignment3.packages.src.packages.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
-import java.lang.String;
+
+// Main class
 public class Main {
 
+    // Main method
     public static void main(String[] args) {
-        createAndShowGUI();
+        createAndShowGUI(); // Create and show the GUI
     }
 
+    // Method to create and show the GUI
     private static void createAndShowGUI() {
-        JFrame frame;
-        frame = new JFrame("Expense Tracker");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new BorderLayout());
+        JFrame frame = new JFrame("Expense Tracker"); // Create a JFrame with title
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Set default close operation
+        frame.setLayout(new BorderLayout()); // Set layout to BorderLayout
 
         // Create the object of expenseManager
         ExpensesManager expensesManager = new ExpensesManager();
 
-        // Create instances of relevant panels
+        // Create instances of panels
         NewExpensesPanel newExpensesPanel = new NewExpensesPanel();
         SavedExpensesPanel savedExpensesPanel = new SavedExpensesPanel();
         CategoryFilterPanel categoryFilterPanel = new CategoryFilterPanel(expensesManager, savedExpensesPanel);
@@ -32,83 +34,66 @@ public class Main {
         frame.add(savedExpensesPanel, BorderLayout.CENTER);
         frame.add(categoryFilterPanel, BorderLayout.SOUTH);
 
-        frame.pack();
+        frame.pack(); // Pack components within the frame
         frame.setLocationRelativeTo(null); // Center the window
-        frame.setVisible(true);
+        frame.setVisible(true); // Make the frame visible
 
-
-
-        // Listener for clicking savebutton
-        newExpensesPanel.getSaveButton().addActionListener(e ->  {
-            double amount = newExpensesPanel.getAmount();
-            //Adding panel to prevent saving expenses less equal to 0
+        // Listener for clicking save button
+        newExpensesPanel.getSaveButton().addActionListener(e -> {
+            double amount = newExpensesPanel.getAmount(); // Get entered amount
+            // Check if amount is valid
             if (amount <= 0) {
                 JOptionPane.showMessageDialog(frame, "Amount must be greater than zero.", "Error", JOptionPane.ERROR_MESSAGE);
                 return; // Stop further execution
             }
 
-            String currency = String.valueOf(newExpensesPanel.getExpenseCurrency());
-            String category = String.valueOf(newExpensesPanel.getExpenseCategory());
+            String currency = String.valueOf(newExpensesPanel.getExpenseCurrency()); // Get selected currency
+            String category = String.valueOf(newExpensesPanel.getExpenseCategory()); // Get selected category
+            LocalDate date = newExpensesPanel.getDate(); // Get selected date
 
-            LocalDate date = newExpensesPanel.getDate();
-
+            // Create new expense
             Expense newExpense = new Expense(amount, currency, category, date);
-            expensesManager.addExpense(newExpense);
-            savedExpensesPanel.updateTable(expensesManager.getAllExpenses());
+            expensesManager.addExpense(newExpense); // Add expense to manager
+            savedExpensesPanel.updateTable(expensesManager.getAllExpenses()); // Update saved expenses panel
         });
-
-
-        SavedExpensesEditDialog editDialog = new SavedExpensesEditDialog(frame);
 
         // Edit Button ActionListener
         newExpensesPanel.getEditButton().addActionListener(e -> {
             int selectedRow = savedExpensesPanel.getSavedSelectedExpenseIndex();
             if (selectedRow != -1) {
-                // get the index
                 Expense selectedExpense = expensesManager.getAllExpenses().get(selectedRow);
+                SavedExpensesEditDialog editDialog = new SavedExpensesEditDialog(frame);
                 boolean saved = editDialog.showDialog(selectedExpense);
                 if (saved) {
                     Expense editedExpense = editDialog.getEditedExpense();
-                    expensesManager.replaceExpense(selectedRow, selectedExpense);
+                    expensesManager.replaceExpense(selectedRow, editedExpense);
                     savedExpensesPanel.updateTable(expensesManager.getAllExpenses());
                 }
             }
         });
 
-        //delete button
+        // Delete button ActionListener
         newExpensesPanel.getDeleteButton().addActionListener(e -> {
             int selectedRow = savedExpensesPanel.getSavedSelectedExpenseIndex();
             if (selectedRow != -1) {
-                // Get the selected expense
-                Expense selectedExpense = expensesManager.getAllExpenses().get(selectedRow);
-                // Remove the selected expense from the list
-                expensesManager.removeExpense(selectedRow);
-                // Update the table to reflect the changes
-                savedExpensesPanel.updateTable(expensesManager.getAllExpenses());
+                expensesManager.removeExpense(selectedRow); // Remove expense from manager
+                savedExpensesPanel.updateTable(expensesManager.getAllExpenses()); // Update saved expenses panel
             }
         });
 
-
         // Clear Button ActionListener
         newExpensesPanel.getClearButton().addActionListener(e -> {
-            expensesManager.clearExpenses();
-            savedExpensesPanel.updateTable(expensesManager.getAllExpenses());
+            expensesManager.clearExpenses(); // Clear all expenses
+            savedExpensesPanel.updateTable(expensesManager.getAllExpenses()); // Update saved expenses panel
         });
 
-
         // Filter Button ActionListener
-
-        // Filter Button ActionListener
-        //Bug
-        //Fix: categoryFilterPanel.getFilterButton().addActionListener(e -> categoryFilterPanel.applyFilter());
         categoryFilterPanel.getFilterButton().addActionListener(e -> categoryFilterPanel.applyFilter());
-
 
         // Restore Button ActionListener
         categoryFilterPanel.getRestoreButton().addActionListener(e -> categoryFilterPanel.restoreFilter());
 
-        // Sum button
+        // Sum button ActionListener
         categoryFilterPanel.getSumButton().addActionListener(e -> categoryFilterPanel.sumExpenses());
-
     }
 }

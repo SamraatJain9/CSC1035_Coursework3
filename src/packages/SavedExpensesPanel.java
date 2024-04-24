@@ -5,40 +5,36 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+// Panel for displaying saved expenses
 public class SavedExpensesPanel extends JPanel {
-    private SavedExpenses savedExpenses;
-    private JTable jsavedExpenseTable;
+    private SavedExpenses savedExpenses; // SavedExpenses object to hold expenses data
+    private JTable jsavedExpenseTable; // Table to display expenses
+    private List<Expense> previouslySavedExpenses; // List to store previously saved expenses
 
-    private List<Expense> previouslySavedExpenses;
-
-
+    // Constructor
     public SavedExpensesPanel() {
-        setLayout(new BorderLayout());
+        setLayout(new BorderLayout()); // Set layout
 
-        // Initially empty and ready to be added or exported
-        savedExpenses = new SavedExpenses(new ArrayList<>());
-        jsavedExpenseTable = new JTable(savedExpenses);
+        savedExpenses = new SavedExpenses(new ArrayList<>()); // Initialize SavedExpenses object with empty list
+        jsavedExpenseTable = new JTable(savedExpenses); // Initialize table with saved expenses data
 
-        JScrollPane scrollPane = new JScrollPane(jsavedExpenseTable);
-        add(scrollPane, BorderLayout.CENTER);
+        JScrollPane scrollPane = new JScrollPane(jsavedExpenseTable); // Create scroll pane for table
+        add(scrollPane, BorderLayout.CENTER); // Add scroll pane to panel
     }
 
+    // Method to update table with new list of expenses
     public void updateTable(List<Expense> expenses) {
-        previouslySavedExpenses = savedExpenses.getExpenses();
-
-        savedExpenses.setExpenses(expenses);
+        previouslySavedExpenses = savedExpenses.getExpenses(); // Store previously saved expenses
+        savedExpenses.setExpenses(expenses); // Set new list of expenses in SavedExpenses object
     }
 
-
+    // Method to get previously saved expenses
     public List<Expense> getpreviouslySavedExpenses() {
-        return previouslySavedExpenses;
+        return previouslySavedExpenses; // Return previously saved expenses
     }
 
-
-    // method to select the saved expense for further manipulation
+    // Method to get index of selected expense in the table
     public int getSavedSelectedExpenseIndex() {
         return jsavedExpenseTable.getSelectedRow(); // Returns -1 if no row is selected
     }
-
-
 }

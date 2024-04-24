@@ -4,55 +4,48 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+// Manager class for handling expenses
 public class ExpensesManager {
-    private List<Expense> expenses;
+    private List<Expense> expenses; // List to store expenses
 
-
+    // Constructor
     public ExpensesManager() {
-        // initially no expense
-        //Bug
-        //fix ()
-        expenses = new ArrayList<>();
+        expenses = new ArrayList<>(); // Initialize expenses list
     }
 
-    // add an expense to the existing list of expenses
+    // Method to add an expense to the existing list of expenses
     public void addExpense(Expense expense) {
-        expenses.add(expense);
+        expenses.add(expense); // Add expense to list
     }
 
-    // Edit an expense.
+    // Method to replace an expense at a specific index
     public void replaceExpense(int index, Expense newExpense) {
         if (index >= 0 && index < expenses.size()) {
-            expenses.set(index, newExpense);
-
+            expenses.set(index, newExpense); // Replace expense at index
         }
     }
 
-    //Delete Button
+    // Method to remove an expense at a specific index
     public void removeExpense(int index) {
         if (index >= 0 && index < expenses.size()) {
-            expenses.remove(index);
+            expenses.remove(index); // Remove expense at index
         }
     }
 
-
-    // Clear all expenses
+    // Method to clear all expenses
     public void clearExpenses() {
-        expenses.clear();
+        expenses.clear(); // Clear all expenses
     }
 
-
-    // return the entire list of expenses added so far
+    // Method to return the entire list of expenses added so far
     public List<Expense> getAllExpenses() {
-        return new ArrayList<>(expenses);
+        return new ArrayList<>(expenses); // Return a copy of the expenses list
     }
 
-
-    // get the expense based on category for CategoryFilterPanel
+    // Method to get expenses based on category for CategoryFilterPanel
     public List<Expense> getExpensesByCategory(Category category) {
         return expenses.stream()
                 .filter(expense -> expense.category().equals(category))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()); // Filter expenses by category and return as list
     }
-
 }

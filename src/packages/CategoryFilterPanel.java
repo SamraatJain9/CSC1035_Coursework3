@@ -4,93 +4,81 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
+// Panel for filtering expenses by category
 public class CategoryFilterPanel extends JPanel {
     private ExpensesManager expensesManager;
     private SavedExpensesPanel savedExpensesPanel;
 
-    //Bug Fix
-    private JComboBox<Category> filterComboBox;
+    private JComboBox<Category> filterComboBox; // Combo box for selecting category
+    private JButton filterButton; // Button for applying filter
+    private JButton restoreButton; // Button for restoring filter
+    private JButton sumButton; // Button for summing expenses
+    private JLabel totalExpenseLabel; // Label to display total expense
 
-    //Bug fix
-    private JButton filterButton;
-
-    private JButton restoreButton;
-
-    private JButton sumButton;
-
-    // Label to display total expense
-    private JLabel totalExpenseLabel;
-
-
+    // Constructor
     public CategoryFilterPanel(ExpensesManager expensesManager, SavedExpensesPanel savedExpensesPanel) {
         this.expensesManager = expensesManager;
         this.savedExpensesPanel = savedExpensesPanel;
 
-        //JComboBox<Category> filterComboBox;
-        //JButton filterButton;
+        setLayout(new FlowLayout(FlowLayout.LEFT)); // Set layout
 
-        setLayout(new FlowLayout(FlowLayout.LEFT));
+        filterComboBox = new JComboBox<>(Category.values()); // Initialize filter combo box
+        add(filterComboBox); // Add filter combo box to panel
 
-        filterComboBox = new JComboBox<>(Category.values());
-        add(filterComboBox);
+        filterButton = new JButton("Filter"); // Initialize filter button
+        add(filterButton); // Add filter button to panel
 
-        filterButton = new JButton("Filter");
-        add(filterButton);
+        restoreButton = new JButton("Restore"); // Initialize restore button
+        add(restoreButton); // Add restore button to panel
 
-        restoreButton = new JButton("Restore");
-        add(restoreButton);
+        sumButton = new JButton("Sum"); // Initialize sum button
+        add(sumButton); // Add sum button to panel
 
-        sumButton = new JButton("Sum");
-        add(sumButton);
-
-        // Initialize the totalExpenseLabel
-        totalExpenseLabel = new JLabel("Total Expense: 0");
-        add(totalExpenseLabel);
+        totalExpenseLabel = new JLabel("Total Expense: 0"); // Initialize total expense label
+        add(totalExpenseLabel); // Add total expense label to panel
 
         // Add action listener for the sum button
         sumButton.addActionListener(e -> sumExpenses());
-
     }
 
-    // Methods to get the selected category
-
+    // Method to get the filter button
     public JButton getFilterButton() {
         return filterButton;
     }
 
+    // Method to get the restore button
     public JButton getRestoreButton() {
         return restoreButton;
     }
 
-    public JButton getSumButton(){
-        return  sumButton;
+    // Method to get the sum button
+    public JButton getSumButton() {
+        return sumButton;
     }
 
-
-
+    // Method to apply filter based on selected category
     public void applyFilter() {
-        //Bug filterComboBox
-        Category selectedCategory = (Category) filterComboBox.getSelectedItem();
+        Category selectedCategory = (Category) filterComboBox.getSelectedItem(); // Get selected category
         // Retrieve filtered expenses and update the table
         savedExpensesPanel.updateTable(expensesManager.getExpensesByCategory(selectedCategory));
     }
 
-    public void restoreFilter(){
-
-        List<Expense> previouslySavedExpenses = savedExpensesPanel.getpreviouslySavedExpenses();
+    // Method to restore filter
+    public void restoreFilter() {
+        List<Expense> previouslySavedExpenses = savedExpensesPanel.getpreviouslySavedExpenses(); // Get previously saved expenses
         if (previouslySavedExpenses != null) {
-            savedExpensesPanel.updateTable(previouslySavedExpenses);
+            savedExpensesPanel.updateTable(previouslySavedExpenses); // Update table with previously saved expenses
         }
     }
 
-    //sum all expenses
-    public void sumExpenses(){
+    // Method to sum expenses
+    public void sumExpenses() {
         // Get all expenses
         List<Expense> allExpenses = expensesManager.getAllExpenses();
 
         // Check if there are expenses with different currencies
         boolean hasDifferentCurrencies = allExpenses.stream()
-                .map(Expense::Currency)
+                .map(Expense::currency)
                 .distinct()
                 .count() > 1;
 
@@ -106,6 +94,4 @@ public class CategoryFilterPanel extends JPanel {
         // Update the label to display total expense
         totalExpenseLabel.setText("Total Expense: " + totalExpense);
     }
-
-
 }
