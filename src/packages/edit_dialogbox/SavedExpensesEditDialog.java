@@ -16,6 +16,7 @@ public class SavedExpensesEditDialog extends JDialog {
     private final JComboBox<Currency> currencyComboBox = new JComboBox<>(Currency.values()); // Combo box for selecting currency
     private final JComboBox<Category> categoryComboBox = new JComboBox<>(Category.values()); // Combo box for selecting category
     private final JSpinner dateSpinner = new JSpinner(new SpinnerDateModel()); // Spinner for selecting date
+    private final JLabel errorLabel = new JLabel("", SwingConstants.CENTER); // Label to display error message
     private boolean saved = false; // Flag to track if expense is saved
     private boolean deleted = false; // Flag to track if expense is deleted
 
@@ -35,6 +36,9 @@ public class SavedExpensesEditDialog extends JDialog {
         JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(dateSpinner, "yyyy-MM-dd"); // Date editor format
         dateSpinner.setEditor(dateEditor);
         add(dateSpinner);
+
+        add(new JLabel("")); // Empty label for alignment
+        add(errorLabel); // Error message label
 
         JButton saveButton = new JButton("Save"); // Save button
         saveButton.addActionListener(e -> {
@@ -65,6 +69,7 @@ public class SavedExpensesEditDialog extends JDialog {
         categoryComboBox.setSelectedItem(expense.category());
         dateSpinner.setValue(java.sql.Date.valueOf(expense.date()));
 
+        errorLabel.setText(""); // Clear error message
         saved = false; // Reset saved state
 
         setLocationRelativeTo(getOwner()); // Set location relative to the owner frame
@@ -95,5 +100,6 @@ public class SavedExpensesEditDialog extends JDialog {
             return null; // Return null if amount format is invalid
         }
     }
-}
 
+
+}
