@@ -75,12 +75,25 @@ public class SavedExpensesEditDialog extends JDialog {
 
     // Method to get edited expense
     public Expense getEditedExpense() {
-        double amount = Double.parseDouble(amountField.getText()); // Parse amount field
-        String currency = (String) currencyComboBox.getSelectedItem(); // Get selected currency
-        String category = (String) categoryComboBox.getSelectedItem(); // Get selected category
-        Date date = (Date) dateSpinner.getValue(); // Get selected date
-        LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(); // Convert date to LocalDate
+        try {
+            double amount = Double.parseDouble(amountField.getText()); // Parse amount field
 
-        return new Expense(amount, currency, category, localDate); // Return edited expense
+            // Check if the amount is less than or equal to 0
+            if (amount <= 0) {
+                JOptionPane.showMessageDialog(this, "Expense amount cannot be zero or negative.", "Invalid Amount", JOptionPane.ERROR_MESSAGE);
+                return null; // Return null if amount is invalid
+            }
+
+            String currency = currencyComboBox.getSelectedItem().toString(); // Get selected currency
+            String category = categoryComboBox.getSelectedItem().toString(); // Get selected category
+            Date date = (Date) dateSpinner.getValue(); // Get selected date
+            LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(); // Convert date to LocalDate
+
+            return new Expense(amount, currency, category, localDate); // Return edited expense
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid amount format. Please enter a valid number.", "Invalid Format", JOptionPane.ERROR_MESSAGE);
+            return null; // Return null if amount format is invalid
+        }
     }
 }
+

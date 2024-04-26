@@ -32,18 +32,25 @@ public class SavedExpenses extends AbstractTableModel {
         return columnNames.length; // Return number of columns
     }
 
+
     // Method to get the value at a specific row and column in the table
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Expense expense = expenses.get(rowIndex); // Get expense at specified row index
-        return switch (columnIndex) {
-            case 0 -> expense.amount(); // Return amount for column 0
-            case 1 -> expense.currency(); // Return currency for column 1
-            case 2 -> expense.category(); // Return category for column 2
-            case 3 -> expense.date().toString(); // Return date for column 3
-            default -> null; // Return null for other columns
-        };
+
+        if (expense != null) { // Check if expense is not null
+            return switch (columnIndex) {
+                case 0 -> expense.amount(); // Return amount for column 0
+                case 1 -> expense.currency(); // Return currency for column 1
+                case 2 -> expense.category(); // Return category for column 2
+                case 3 -> expense.date().toString(); // Return date for column 3
+                default -> null; // Return null for other columns
+            };
+        } else {
+            return null; // Return null if expense is null
+        }
     }
+
 
     // Method to get the column name at a specific index
     @Override
