@@ -5,8 +5,14 @@ import assignment3.packages.src.packages.expense_manager.ExpensesManager;
 import assignment3.packages.src.packages.enums.Category;
 
 import javax.swing.*;
+
 import java.awt.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 // Panel for filtering expenses by category
 public class CategoryFilterPanel extends JPanel {
@@ -18,6 +24,8 @@ public class CategoryFilterPanel extends JPanel {
     private JButton restoreButton; // Button for restoring filter
     private JButton sumButton; // Button for summing expenses
     private JLabel totalExpenseLabel; // Label to display total expense
+
+    private Map<Category, List<Expense>> filteredExpensesMap = new HashMap<>();
 
     // Constructor
     public CategoryFilterPanel(ExpensesManager expensesManager, SavedExpensesPanel savedExpensesPanel) {
@@ -62,14 +70,28 @@ public class CategoryFilterPanel extends JPanel {
 
     // Method to apply filter based on selected category
     public void applyFilter() {
-        Category selectedCategory = (Category) filterComboBox.getSelectedItem(); // Get selected category
-        // Retrieve filtered expenses and update the table
-        savedExpensesPanel.updateTable(expensesManager.getExpensesByCategory(selectedCategory));
+        Object selectedCategory = filterComboBox.getSelectedItem(); // Get selected category
+        System.out.println("Selected Category: " + selectedCategory); // Print selected category
+
+        // Get all previously saved expenses from the savedExpensesPanel
+        List<Expense> previouslySavedExpenses = savedExpensesPanel.getPreviouslySavedExpenses();
+
+        // Filter previously saved expenses by the selected category
+        List<Expense> filteredExpenses = previouslySavedExpenses.stream()
+                .filter(expense -> expense.category().equalsIgnoreCase(selectedCategory.toString().trim()))
+                .collect(Collectors.toList());
+
+        // Update the table with filtered expenses
+        savedExpensesPanel.updateTable(filteredExpenses);
     }
+
+
+
+
 
     // Method to restore filter
     public void restoreFilter() {
-        List<Expense> previouslySavedExpenses = savedExpensesPanel.getpreviouslySavedExpenses(); // Get previously saved expenses
+        List<Expense> previouslySavedExpenses = savedExpensesPanel.getPreviouslySavedExpenses(); // Get previously saved expenses
         if (previouslySavedExpenses != null) {
             savedExpensesPanel.updateTable(previouslySavedExpenses); // Update table with previously saved expenses
         }
