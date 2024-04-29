@@ -102,11 +102,10 @@ public class CategoryFilterPanel extends JPanel {
 
     // Method to restore filter
     public void restoreFilter() {
-        List<Expense> previouslySavedExpenses = savedExpensesPanel.getPreviouslySavedExpenses(); // Get previously saved expenses
-        if (previouslySavedExpenses != null) {
-            savedExpensesPanel.updateTable(previouslySavedExpenses); // Update table with previously saved expenses
-        }
+        List<Expense> allExpenses = expensesManager.getAllExpenses(); // Get all expenses
+        savedExpensesPanel.updateTable(allExpenses); // Update table with all expenses
     }
+
 
     // Method to sum expenses
     public void sumExpenses() {
