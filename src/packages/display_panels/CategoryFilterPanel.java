@@ -74,18 +74,29 @@ public class CategoryFilterPanel extends JPanel {
         System.out.println("Selected Category: " + selectedCategory); // Print selected category
 
         // Get all previously saved expenses from the savedExpensesPanel
-        List<Expense> previouslySavedExpenses = savedExpensesPanel.getPreviouslySavedExpenses();
+        List<Expense> allExpenses = expensesManager.getAllExpenses();
+
+        // Print all previously saved expenses to the terminal
+        System.out.println("Previously Saved Expenses:");
+        for (Expense expense : allExpenses) {
+            System.out.println(expense);
+        }
 
         // Filter previously saved expenses by the selected category
-        List<Expense> filteredExpenses = previouslySavedExpenses.stream()
+        List<Expense> filteredExpenses = allExpenses.stream()
                 .filter(expense -> expense.category().equalsIgnoreCase(selectedCategory.toString().trim()))
                 .collect(Collectors.toList());
 
+        // Print filtered expenses to the terminal
+        System.out.println("Filtered Expenses for Category: " + selectedCategory);
+        for (Expense expense : filteredExpenses) {
+            System.out.println(expense);
+        }
+
         // Update the table with filtered expenses
+        System.out.println("Updating table with filtered expenses: " + filteredExpenses);
         savedExpensesPanel.updateTable(filteredExpenses);
     }
-
-
 
 
 
