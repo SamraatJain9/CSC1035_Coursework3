@@ -98,4 +98,7 @@ public class CategoryFilterPanel extends JPanel {
         // Update the label to display total expense
         totalExpenseLabel.setText("Total Expense: " + totalExpense);
     }
+
+
+
 }
