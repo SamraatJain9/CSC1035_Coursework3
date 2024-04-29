@@ -1,6 +1,6 @@
 package assignment3.packages.src.packages.expense_manager;
 
-import assignment3.packages.src.packages.expense_record.Expense;
+import assignment3.packages.src.packages.constructor.Expense;
 import assignment3.packages.src.packages.enums.Category;
 
 import java.util.ArrayList;

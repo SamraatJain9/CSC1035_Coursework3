@@ -1,6 +1,6 @@
 package assignment3.packages.src.packages.display_table;
 
-import assignment3.packages.src.packages.expense_record.Expense;
+import assignment3.packages.src.packages.constructor.Expense;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
