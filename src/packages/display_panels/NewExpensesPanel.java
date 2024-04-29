@@ -93,7 +93,7 @@ public class NewExpensesPanel extends JPanel {
     }
 
     // Method to get the selected expense category
-    public Category getExpenseCategory() {
+    public Object getExpenseCategory() {
         return (Category) categoryComboBox.getSelectedItem(); // Return selected category from combo box
     }
 

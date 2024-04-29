@@ -7,7 +7,7 @@ public enum Category {
     TRANSPORTATION("Transportation"),
     ENTERTAINMENT("Entertainment"),
     HEALTHCARE("Healthcare"),
-    DINING_OUT("Eating Out"),
+    DINING_OUT("Dining Out"),
     EDUCATION("Education"),
     OTHER("Other");
 
