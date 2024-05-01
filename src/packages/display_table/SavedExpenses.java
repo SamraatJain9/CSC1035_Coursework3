@@ -42,7 +42,7 @@ public class SavedExpenses extends AbstractTableModel {
             return switch (columnIndex) {
                 case 0 -> expense.amount(); // Return amount for column 0
                 case 1 -> expense.currency(); // Return currency for column 1
-                case 2 -> expense.category().getDisplayName(); // Return category for column 2
+                case 2 -> expense.category(); // Return category for column 2
                 case 3 -> expense.date().toString(); // Return date for column 3
                 default -> null; // Return null for other columns
             };

@@ -70,7 +70,7 @@ public class CategoryFilterPanel extends JPanel {
 
     // Method to apply filter based on selected category
     public void applyFilter() {
-        Object selectedCategory = (Category) filterComboBox.getSelectedItem(); // Get selected category
+        Object selectedCategory = filterComboBox.getSelectedItem(); // Get selected category
         System.out.println("Selected Category: " + selectedCategory); // Print selected category
 
         // Get all previously saved expenses from the savedExpensesPanel
@@ -84,7 +84,7 @@ public class CategoryFilterPanel extends JPanel {
 
         // Filter previously saved expenses by the selected category
         List<Expense> filteredExpenses = allExpenses.stream()
-                .filter(expense -> expense.category() == selectedCategory)
+                .filter(expense -> expense.category().equalsIgnoreCase(selectedCategory.toString().trim()))
                 .collect(Collectors.toList());
 
         // Print filtered expenses to the terminal

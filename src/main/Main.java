@@ -5,7 +5,6 @@ import assignment3.packages.src.packages.display_panels.CategoryFilterPanel;
 import assignment3.packages.src.packages.display_panels.NewExpensesPanel;
 import assignment3.packages.src.packages.display_panels.SavedExpensesPanel;
 import assignment3.packages.src.packages.edit_dialogbox.SavedExpensesEditDialog;
-import assignment3.packages.src.packages.enums.Category;
 import assignment3.packages.src.packages.expense_manager.ExpensesManager;
 import assignment3.packages.src.packages.constructor.Expense;
 
@@ -54,7 +53,7 @@ public class Main {
             }
 
             String currency = String.valueOf(newExpensesPanel.getExpenseCurrency()); // Get selected currency
-            Category category = Category.valueOf(String.valueOf(newExpensesPanel.getExpenseCategory())); // Get selected category
+            String category = String.valueOf(newExpensesPanel.getExpenseCategory()); // Get selected category
             LocalDate date = newExpensesPanel.getDate(); // Get selected date
 
             // Create new expense
