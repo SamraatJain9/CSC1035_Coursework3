@@ -90,7 +90,7 @@ public class SavedExpensesEditDialog extends JDialog {
             }
 
             String currency = currencyComboBox.getSelectedItem().toString(); // Get selected currency
-            String category = categoryComboBox.getSelectedItem().toString(); // Get selected category
+            Category category = Category.valueOf(categoryComboBox.getSelectedItem().toString()); // Get selected category
             Date date = (Date) dateSpinner.getValue(); // Get selected date
             LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(); // Convert date to LocalDate
 
