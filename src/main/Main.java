@@ -57,6 +57,7 @@ public class Main {
             LocalDate date = newExpensesPanel.getDate(); // Get selected date
 
             // Create new expense
+
             Expense newExpense = new Expense(amount, currency, category, date);
             expensesManager.addExpense(newExpense); // Add expense to manager
             savedExpensesPanel.updateTable(expensesManager.getAllExpenses()); // Update saved expenses panel
