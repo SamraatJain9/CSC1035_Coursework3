@@ -56,12 +56,18 @@ public class Main {
             String category = String.valueOf(newExpensesPanel.getExpenseCategory()); // Get selected category
             LocalDate date = newExpensesPanel.getDate(); // Get selected date
 
-            // Create new expense
+            // Check if the date is valid
+            if (date == null) {
+                JOptionPane.showMessageDialog(frame, "Invalid date entered.", "Error", JOptionPane.ERROR_MESSAGE);
+                return; // Stop further execution
+            }
 
+            // Create new expense
             Expense newExpense = new Expense(amount, currency, category, date);
             expensesManager.addExpense(newExpense); // Add expense to manager
             savedExpensesPanel.updateTable(expensesManager.getAllExpenses()); // Update saved expenses panel
         });
+
 
         // Edit Button ActionListener
         newExpensesPanel.getEditButton().addActionListener(e -> {

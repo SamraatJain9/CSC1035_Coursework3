@@ -103,16 +103,30 @@ public class NewExpensesPanel extends JPanel {
     }
 
     // Method to get the selected date
+// Method to get the selected date
     public LocalDate getDate() {
         // Construct and return a LocalDate object from the selected date components
         Integer day = (Integer) dayComboBox.getSelectedItem();
-        int month = monthComboBox.getSelectedIndex() + 1; // Since months are zero-based
+        int month = monthComboBox.getSelectedIndex() + 1;
         Integer year = (Integer) yearComboBox.getSelectedItem();
 
         if (day == null || year == null) {
-            return null; // Return null if day or year is null
+            return null;
         }
 
-        return LocalDate.of(year, month, day); // Return LocalDate object
+        // Check for valid day in the selected month
+        if (month == 2 && day > 28) {
+            // For February, check if the selected day is greater than 28
+            int maxDaysInFebruary = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)) ? 29 : 28;
+            if (day > maxDaysInFebruary) {
+                return null;
+            }
+        } else if ((month == 4 || month == 6 || month == 9 || month == 11) && day > 30) {
+
+            return null;
+        }
+
+        return LocalDate.of(year, month, day);
     }
+
 }
